@@ -161,6 +161,65 @@ app.get("/api/orders", async (req, res) => {
   }
 });
 
+// Product Schema explicitly using "products" collection
+const productSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    productId: { type: String, required: true, unique: true },
+    price: { type: Number, required: true },
+    stock: { type: Number, required: true },
+  },
+  { collection: "products" } // Explicit collection name
+);
+
+const Product = mongoose.model("Product", productSchema);
+
+// Get all products (GET)
+app.get("/api/products", async (req, res) => {
+  try {
+    // Fetch all products from the database
+    const products = await Product.find({});
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Failed to fetch products." });
+  }
+});
+
+// Update product stock by productId (PUT)
+app.put("/api/products/:productId", async (req, res) => {
+  const { productId } = req.params;
+  const { stock, name, price } = req.body; // Include name and price for adding new product
+
+  try {
+    // Try to find the product by its productId
+    let product = await Product.findOne({ productId: productId });
+
+    if (product) {
+      // Update the existing product's stock
+      product.stock = stock;
+      await product.save();
+      res.status(200).json({ message: "Stock updated successfully", product });
+    } else {
+      // Create a new product if it doesn't exist
+      const newProduct = new Product({
+        productId,
+        stock,
+        name: name || "Unnamed Product", // Default name if not provided
+        price: price || 0, // Default price if not provided
+      });
+      await newProduct.save();
+      res.status(201).json({ message: "New product added successfully", newProduct });
+    }
+  } catch (error) {
+    console.error("Error updating or adding product:", error);
+    res.status(500).json({ error: "Failed to update or add product." });
+  }
+});
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

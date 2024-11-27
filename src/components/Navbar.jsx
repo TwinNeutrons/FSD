@@ -12,12 +12,20 @@ const Navbar = () => {
       {/* Navigation Links */}
       <div className="navbar-links">
         <NavLink
-          to="/data-entry" /* Link "Orders" to DataEntryPage.jsx */
+          to="/data-entry" 
           className={({ isActive }) =>
             isActive ? "navbar-link active" : "navbar-link"
           }
         >
           Orders
+        </NavLink>
+        <NavLink
+          to="/inventory"
+          className={({ isActive }) =>
+            isActive ? "navbar-link active" : "navbar-link"
+          }
+        >
+          Inventory
         </NavLink>
         <NavLink
           to="/analytics"
