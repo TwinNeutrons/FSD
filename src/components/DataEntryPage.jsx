@@ -204,7 +204,7 @@ const DataEntryPage = () => {
               {currentOrders.length > 0 ? (
                 currentOrders.map((order) => (
                   <tr key={order.id}>
-                    <td className="border p-2">{order.id}</td>
+                    <td className="border p-2">{order.productId}</td>
                     <td className="border p-2">{order.product}</td>
                     <td className="border p-2">{order.customer}</td>
                     <td className="border p-2">{order.deliveryStatus}</td>

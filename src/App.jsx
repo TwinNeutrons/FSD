@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage";
 import DataEntryPage from "./components/DataEntryPage";
 import AnalyticsPage from "./components/AnalyticsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Inventory from "./components/Inventory";
 
 function App() {
   return (
@@ -28,6 +29,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/inventory" 
+        element={
+          <ProtectedRoute>
+            <Inventory />
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   );
