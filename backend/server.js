@@ -20,7 +20,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", () => console.log("Connected to MongoDB database 'SCM'"));
 
-
+// User Schema explicitly using "users" collection
 const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
@@ -31,23 +31,26 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-// Shipment Schema explicitly using "shipments" collection
-const shipmentSchema = new mongoose.Schema(
+// Shipment Schema explicitly using "orders" collection
+const orderSchema = new mongoose.Schema(
   {
     product: String,
+    productId: String,
     shipper: String,
-    status: { type: String, enum: ["Approved", "Pending", "Rejected"], default: "Pending" },
     customer: String,
     customerId: String,
-    trackingNumber: String,
+    house: String,
+    city: String,
+    state: String,
+    pincode: String,
+    country: String,
     deliveryStatus: { type: String, enum: ["Pending", "In Transit", "Delivered"], default: "Pending" },
-    deliveryPercentage: Number,
-    date: { type: Date, default: Date.now },
+    quantity: String,
   },
-  { collection: "shipments" } // Specify collection name
+  { collection: "orders" } // Explicit collection name
 );
 
-const Shipment = mongoose.model("Shipment", shipmentSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 // Routes
 // Register
@@ -107,61 +110,54 @@ app.get("/protected", (req, res) => {
 
 // Shipment Routes
 // Add shipment data (POST)
-app.post("/api/shipments", async (req, res) => {
-  const { product, shipper, status, customer, customerId, trackingNumber, deliveryStatus, deliveryPercentage } = req.body;
+app.post("/api/orders", async (req, res) => {
+  const {
+    product,
+    productId,
+    shipper,
+    customer,
+    customerId,
+    house,
+    city,
+    state,
+    pincode,
+    country,
+    deliveryStatus,
+    quantity,
+  } = req.body;
 
   try {
-    const shipment = new Shipment({
+    const newOrder = new Order({
       product,
+      productId,
       shipper,
-      status,
       customer,
       customerId,
-      trackingNumber,
+      house,
+      city,
+      state,
+      pincode,
+      country,
       deliveryStatus,
-      deliveryPercentage,
+      quantity,
     });
-    await shipment.save();
-    res.status(201).json({ message: "Shipment data added successfully!" });
+    await newOrder.save();
+    res.status(201).json({ message: "Order added successfully!" });
   } catch (error) {
-    console.error("Error adding shipment:", error);
-    res.status(500).json({ error: "Failed to add shipment data." });
+    console.error("Error adding order:", error);
+    res.status(500).json({ error: "Failed to add order." });
   }
 });
 
-// Get shipment analytics (GET)
-app.get("/api/shipments", async (req, res) => {
+// Get all shipment orders (GET)
+app.get("/api/orders", async (req, res) => {
   try {
-    const shipments = await Shipment.aggregate([
-      {
-        $group: {
-          _id: { $month: "$date" },  // Group by month
-          shipments: { $sum: 1 },     // Count number of shipments
-          deliveries: {
-            $sum: { $cond: [{ $eq: ["$deliveryStatus", "Delivered"] }, 1, 0] },  // Count delivered shipments
-          },
-        },
-      },
-      {
-        $project: {
-          month: "$_id",
-          shipments: 1,
-          deliveries: 1,
-          _id: 0,
-        },
-      },
-      { $sort: { month: 1 } }, // Sort by month (ascending)
-    ]);
-
-    const recentActivity = await Shipment.find()
-      .sort({ date: -1 })
-      .limit(5)
-      .select("product shipper status customer customerId");
-
-    res.json({ analytics: shipments, recentActivity });
+    // Fetch all orders without filtering by userId
+    const orders = await Order.find({});
+    res.status(200).json(orders);
   } catch (error) {
-    console.error("Error fetching shipment data:", error);
-    res.status(500).json({ error: "Failed to fetch shipment data." });
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders." });
   }
 });
 

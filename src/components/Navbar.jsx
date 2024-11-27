@@ -1,11 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom"; // Use NavLink for active tab highlighting
+import "./Navbar.css"; // External CSS file
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-500 text-white p-4 flex justify-between">
-      <Link to="/analytics">Analytics</Link>
-      <Link to="/data-entry">Data Entry</Link>
+    <nav className="navbar">
+      {/* Company Logo */}
+      <div className="navbar-logo">
+        <img src="/path-to-your-logo.png" alt="Company Logo" />
+      </div>
+
+      {/* Navigation Links */}
+      <div className="navbar-links">
+        <NavLink
+          to="/data-entry" /* Link "Orders" to DataEntryPage.jsx */
+          className={({ isActive }) =>
+            isActive ? "navbar-link active" : "navbar-link"
+          }
+        >
+          Orders
+        </NavLink>
+        <NavLink
+          to="/analytics"
+          className={({ isActive }) =>
+            isActive ? "navbar-link active" : "navbar-link"
+          }
+        >
+          Analytics
+        </NavLink>
+      </div>
     </nav>
   );
 };

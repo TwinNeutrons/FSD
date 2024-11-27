@@ -1,0 +1,64 @@
+/* General navbar styling */
+.navbar {
+    position: fixed;
+    top: 10px; /* Slightly away from the top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Adjust width to look modern */
+    background-color: #001F54; /* Deep Blue Background */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow */
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  
+  /* Logo styling */
+  .navbar-logo img {
+    height: 40px; /* Adjust logo size */
+  }
+  
+  /* Navbar links container */
+  .navbar-links {
+    display: flex;
+    gap: 20px; /* Space between links */
+  }
+  
+  /* Individual link styling */
+  .navbar-link {
+    color: #DFF6FF; /* Light Blue Text */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px; /* Slightly rounded buttons */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Active link styling */
+  .navbar-link.active {
+    background-color: #003F88; /* Highlight active tab */
+    color: #ffffff;
+  }
+  
+  /* Hover effect */
+  .navbar-link:hover {
+    background-color: #003F88; /* Match active tab hover effect */
+    color: #ffffff;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column; /* Stack links on smaller screens */
+      align-items: flex-start;
+      padding: 15px;
+    }
+  
+    .navbar-links {
+      flex-direction: column; /* Vertical layout for links */
+      gap: 10px; /* Reduce spacing */
+    }
+  }
+  
