@@ -233,10 +233,6 @@ const fetchCityCoordinates = async (orderData) => {
           <Bar data={shipperBarData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
         <div style={{ width: "100%", margin: "0 auto", marginTop: "20px" }}>
-          <h2>Order Volume Over Time</h2>
-          <Line data={lineData} options={{ responsive: true, maintainAspectRatio: true }} />
-        </div>
-        <div style={{ width: "100%", margin: "0 auto", marginTop: "20px" }}>
           <h2>Top Customers by Order Quantity</h2>
           <Bar data={customerBarData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
