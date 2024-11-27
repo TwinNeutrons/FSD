@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+
+
+.inventory-container {
+    margin: 0;
+  font-family: "Hubot Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  background-color: #0a1128;
+  color: #dff6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200vh;
+  width: 100vw;
+  background-image: url("data_entry_bg.jpg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 150px; /* Start a little lower to accommodate the navbar */
+}
+
+.inventory-box {
+  background-color: #001f5486; /* Deep Blue Box */
+  padding: 30px;
+  width: 600px; /* Wider box */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-box h1,
+.inventory-box h2 {
+  color: #dff6ff;
+  margin-bottom: 20px;
+}
+
+.inventory-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.inventory-form input {
+  padding: 10px;
+  border: 1px solid #003f88;
+  border-radius: 5px;
+  background-color: #0a1128bb;
+  color: #dff6ff;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  padding: 12px;
+  background-color: #003f8894;
+  border: none;
+  border-radius: 5px;
+  color: #dff6ff;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #001f54;
+}
+
+.table-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table-section th,
+.table-section td {
+  border: 1px solid #003f88;
+  padding: 10px;
+  text-align: center;
+}
+
+.table-section th {
+  background-color: #001f54;
+  color: #dff6ff;
+}
+
+.no-products {
+  text-align: center;
+  color: #dff6ff;
+  padding: 20px;
+}
