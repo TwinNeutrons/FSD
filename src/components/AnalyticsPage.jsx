@@ -13,6 +13,7 @@ import {
 import { Bar, Pie, Line } from "react-chartjs-2";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import Navbar from "./Navbar";
+import "./AnalyticsPage.css";
 
 // Register Chart.js components
 ChartJS.register(
@@ -53,46 +54,46 @@ const Analysis = () => {
   // Function to fetch coordinates for cities
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const fetchCityCoordinates = async (orderData) => {
-  const cities = orderData.map(order => order.city);
-  const uniqueCities = [...new Set(cities)]; // Remove duplicates
-  
-  const markersData = [];
+  const fetchCityCoordinates = async (orderData) => {
+    const cities = orderData.map(order => order.city);
+    const uniqueCities = [...new Set(cities)]; // Remove duplicates
 
-  // Function to process each city with a delay of 1 second between each request
-  for (let city of uniqueCities) {
-    try {
-      // Introduce a delay of 1 second before each fetch
-      await delay(2000); // 1000ms = 1 second
-      
-      const response = await fetch(`https://geocode.xyz/${city}?json=1`);
-      const data = await response.json();
+    const markersData = [];
 
-      const latitude = parseFloat(data.latt);
-      const longitude = parseFloat(data.longt);
+    // Function to process each city with a delay of 1 second between each request
+    for (let city of uniqueCities) {
+      try {
+        // Introduce a delay of 1 second before each fetch
+        await delay(2000); // 1000ms = 1 second
 
-      // Check if the coordinates are valid
-      if (!isNaN(latitude) && !isNaN(longitude)) {
-        markersData.push({
-          city,
-          coordinates: [longitude, latitude],
-        });
-      } else {
-        // If invalid, return a default location (e.g., [0, 0])
-        console.warn(`Invalid coordinates for city: ${city}`);
-        markersData.push({ city, coordinates: [0, 0] });
+        const response = await fetch(`https://geocode.xyz/${city}?json=1`);
+        const data = await response.json();
+
+        const latitude = parseFloat(data.latt);
+        const longitude = parseFloat(data.longt);
+
+        // Check if the coordinates are valid
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+          markersData.push({
+            city,
+            coordinates: [longitude, latitude],
+          });
+        } else {
+          // If invalid, return a default location (e.g., [0, 0])
+          console.warn(`Invalid coordinates for city: ${city}`);
+          markersData.push({ city, coordinates: [0, 0] });
+        }
+      } catch (error) {
+        console.error("Error fetching geolocation for city:", city, error);
+        markersData.push({ city, coordinates: [0, 0] }); // Default to [0,0] if error
       }
-    } catch (error) {
-      console.error("Error fetching geolocation for city:", city, error);
-      markersData.push({ city, coordinates: [0, 0] }); // Default to [0,0] if error
     }
-  }
 
-  // Once all markers are fetched, update the state
-  setCityMarkers(markersData);
-};
+    // Once all markers are fetched, update the state
+    setCityMarkers(markersData);
+  };
 
-  
+
 
   // Data processing functions
   const getOrderQuantityByProduct = () => {
@@ -220,23 +221,23 @@ const fetchCityCoordinates = async (orderData) => {
             <strong>{error}</strong>
           </div>
         )}
-        <div style={{ width: "100%", margin: "0 auto" }}>
+        <div className="chart-container">
           <h2>Order Quantity by Product</h2>
           <Bar data={barData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
-        <div style={{ width: "100%", margin: "0 auto", marginTop: "20px" }}>
+        <div className="chart-container">
           <h2>Orders by Delivery Status</h2>
           <Pie data={pieData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
-        <div style={{ width: "100%", margin: "0 auto", marginTop: "20px" }}>
+        <div className="chart-container">
           <h2>Order Quantity by Shipper</h2>
           <Bar data={shipperBarData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
-        <div style={{ width: "100%", margin: "0 auto", marginTop: "20px" }}>
+        <div className="chart-container">
           <h2>Top Customers by Order Quantity</h2>
           <Bar data={customerBarData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
-        <div style={{ marginTop: "20px" }}>
+        <div className="map-container">
           <h2>Orders by Customer Location</h2>
           <ComposableMap>
             <Geographies geography="https://unpkg.com/world-atlas@2.0.2/countries-110m.json">
@@ -256,6 +257,7 @@ const fetchCityCoordinates = async (orderData) => {
         </div>
       </div>
     </>
+
   );
 };
 
