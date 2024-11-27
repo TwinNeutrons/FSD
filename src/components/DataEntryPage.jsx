@@ -235,7 +235,7 @@ const DataEntryPage = () => {
                 {currentOrders.length > 0 ? (
                   currentOrders.map((order) => (
                     <tr key={order.id}>
-                      <td>{order.id}</td>
+                      <td>{order.productId}</td>
                       <td>{order.product}</td>
                       <td>{order.customer}</td>
                       <td>{order.deliveryStatus}</td>

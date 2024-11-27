@@ -60,17 +60,14 @@ const Analysis = () => {
 
     const markersData = [];
 
-    // Function to process each city with a delay of 1 second between each request
     for (let city of uniqueCities) {
       try {
-        // Introduce a delay of 1 second before each fetch
-        await delay(2000); // 1000ms = 1 second
-
-        const response = await fetch(`https://geocode.xyz/${city}?json=1`);
+        await delay(1000); // 1000ms = 1 second
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${city}&format=json`);
         const data = await response.json();
 
-        const latitude = parseFloat(data.latt);
-        const longitude = parseFloat(data.longt);
+        const latitude = parseFloat(data[0].lat);
+        const longitude = parseFloat(data[0].lon);
 
         // Check if the coordinates are valid
         if (!isNaN(latitude) && !isNaN(longitude)) {
@@ -87,10 +84,9 @@ const Analysis = () => {
         console.error("Error fetching geolocation for city:", city, error);
         markersData.push({ city, coordinates: [0, 0] }); // Default to [0,0] if error
       }
+      setCityMarkers(markersData);
     }
 
-    // Once all markers are fetched, update the state
-    setCityMarkers(markersData);
   };
 
 
@@ -183,19 +179,6 @@ const Analysis = () => {
     ],
   };
 
-  const volumeData = getOrderVolumeOverTime();
-  const lineData = {
-    labels: Object.keys(volumeData),
-    datasets: [
-      {
-        label: "Order Volume Over Time",
-        data: Object.values(volumeData),
-        fill: false,
-        backgroundColor: "rgba(54, 162, 235, 0.6)",
-        borderColor: "rgba(54, 162, 235, 1)",
-      },
-    ],
-  };
 
   const customerData = getTopCustomersByOrderQuantity();
   const customerBarData = {
@@ -215,7 +198,9 @@ const Analysis = () => {
     <>
       <Navbar />
       <div className="content">
-        <h1>Order Analysis</h1>
+        <br></br>
+        <br></br>
+
         {error && (
           <div style={{ color: "red", marginBottom: "20px" }}>
             <strong>{error}</strong>
@@ -237,9 +222,9 @@ const Analysis = () => {
           <h2>Top Customers by Order Quantity</h2>
           <Bar data={customerBarData} options={{ responsive: true, maintainAspectRatio: true }} />
         </div>
-        <div className="map-container">
-          <h2>Orders by Customer Location</h2>
-          <ComposableMap>
+        <div className="map-container" >
+          <h2 style={{ color: "#fff" }}>Orders by Customer Location</h2>
+          <ComposableMap style={{ backgroundColor: "#103a91" }}>
             <Geographies geography="https://unpkg.com/world-atlas@2.0.2/countries-110m.json">
               {({ geographies }) =>
                 geographies.map((geo) => <Geography key={geo.rsmKey} geography={geo} />)
@@ -247,8 +232,8 @@ const Analysis = () => {
             </Geographies>
             {cityMarkers.map(({ city, coordinates }, index) => (
               <Marker key={index} coordinates={coordinates}>
-                <circle r={5} fill="#F53" />
-                <text textAnchor="middle" y={-10} style={{ fontSize: 12, fill: "#F53" }}>
+                <circle r={2} fill="#fff" />
+                <text textAnchor="middle" y={-10} style={{ fontSize: 8, fill: "#fff" }}>
                   {city}
                 </text>
               </Marker>

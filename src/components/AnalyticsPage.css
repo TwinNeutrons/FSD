@@ -17,7 +17,8 @@ h1 {
 
 .chart-container {
   margin: 20px auto;
-  max-width: 800px;
+  width: 60%;
+  max-width: 1800px;
   background: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

@@ -14,7 +14,7 @@
   align-items: center; 
   height: 100vh; 
   width: 100vw;
-  background-image: url(loginbg.jpg);
+  background-image: url("loginbg.jpg");
   background-position: center;
   background-size: cover;
   display: flex;
