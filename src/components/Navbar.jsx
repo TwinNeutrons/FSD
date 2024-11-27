@@ -35,6 +35,14 @@ const Navbar = () => {
         >
           Analytics
         </NavLink>
+        <NavLink
+          to="/" 
+          className={({ isActive }) =>
+            isActive ? "navbar-link active" : "navbar-link"
+          }
+        >
+          Logout
+        </NavLink>
       </div>
     </nav>
   );
