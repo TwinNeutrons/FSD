@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import "./DataEntryPage.css";
 
 const DataEntryPage = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +44,6 @@ const DataEntryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // No need to include userId
       const orderData = { ...formData };
       await axios.post("http://localhost:5000/api/orders", orderData);
       alert("Order added successfully!");
@@ -72,159 +72,189 @@ const DataEntryPage = () => {
 
   return (
     <>
+    <div className="data-entry-page">
       <Navbar />
-      <div className="p-4">
-        <h1 className="text-3xl font-bold mb-6">Orders</h1>
+      <div className="data-entry-container">
+        <div className="data-entry-box">
+          <h1 className="data-entry-header">Add New Order</h1>
 
-        {/* Subheading: Data Entry */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Data Entry</h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="product"
-              placeholder="Product"
-              value={formData.product}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="productId"
-              placeholder="Product ID"
-              value={formData.productId}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="shipper"
-              placeholder="Shipper"
-              value={formData.shipper}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="customer"
-              placeholder="Customer"
-              value={formData.customer}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="customerId"
-              placeholder="Customer ID"
-              value={formData.customerId}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="house"
-              placeholder="House"
-              value={formData.house}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="pincode"
-              placeholder="Pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="country"
-              placeholder="Country"
-              value={formData.country}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <select
-              name="deliveryStatus"
-              value={formData.deliveryStatus}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            >
-              <option value="Pending">Pending</option>
-              <option value="In Transit">In Transit</option>
-              <option value="Delivered">Delivered</option>
-            </select>
-            <input
-              type="number"
-              name="quantity"
-              placeholder="Quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-            <button
-              type="submit"
-              className="col-span-2 bg-blue-500 text-white p-2 rounded"
-            >
-              Submit
+          {/* Data Entry Form */}
+          <form onSubmit={handleSubmit} className="data-entry-form">
+            <div className="data-entry-form-group">
+              <label>Product</label>
+              <input
+                type="text"
+                name="product"
+                value={formData.product}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Product Name"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Product ID</label>
+              <input
+                type="text"
+                name="productId"
+                value={formData.productId}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Product ID"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Shipper</label>
+              <input
+                type="text"
+                name="shipper"
+                value={formData.shipper}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Shipper Name"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Customer</label>
+              <input
+                type="text"
+                name="customer"
+                value={formData.customer}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Customer Name"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Customer ID</label>
+              <input
+                type="text"
+                name="customerId"
+                value={formData.customerId}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Customer ID"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>House</label>
+              <input
+                type="text"
+                name="house"
+                value={formData.house}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="House Address"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>City</label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="City"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>State</label>
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="State"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Pincode</label>
+              <input
+                type="text"
+                name="pincode"
+                value={formData.pincode}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Pincode"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Country</label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                className="data-entry-input"
+                placeholder="Country"
+              />
+            </div>
+            <div className="data-entry-form-group">
+              <label>Delivery Status</label>
+              <select
+                name="deliveryStatus"
+                value={formData.deliveryStatus}
+                onChange={handleChange}
+                className="data-entry-input"
+              >
+                <option value="Pending">Pending</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </div>
+            <div className="data-entry-form-group">
+              <label>Quantity</label>
+              <input
+                type="number"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                className="data-entry-input"
+              />
+            </div>
+            <button type="submit" className="data-entry-submit-btn">
+              Add Order
             </button>
           </form>
-        </section>
 
-        {/* Subheading: Current Orders */}
-        <section>
-          <h2 className="text-xl font-semibold mb-4">Current Orders</h2>
-          <table className="w-full border-collapse border border-gray-200">
-            <thead>
-              <tr>
-                <th className="border p-2">Order ID</th>
-                <th className="border p-2">Product</th>
-                <th className="border p-2">Customer</th>
-                <th className="border p-2">Delivery Status</th>
-                <th className="border p-2">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentOrders.length > 0 ? (
-                currentOrders.map((order) => (
-                  <tr key={order.id}>
-                    <td className="border p-2">{order.id}</td>
-                    <td className="border p-2">{order.product}</td>
-                    <td className="border p-2">{order.customer}</td>
-                    <td className="border p-2">{order.deliveryStatus}</td>
-                    <td className="border p-2">{order.quantity}</td>
-                  </tr>
-                ))
-              ) : (
+          {/* Display Current Orders */}
+          <div className="data-entry-orders-section">
+            <h2 className="data-entry-subheader">Current Orders</h2>
+            <table className="data-entry-table">
+              <thead>
                 <tr>
-                  <td
-                    colSpan="5"
-                    className="border p-2 text-center text-gray-500"
-                  >
-                    No orders found.
-                  </td>
+                  <th>Order ID</th>
+                  <th>Product</th>
+                  <th>Customer</th>
+                  <th>Delivery Status</th>
+                  <th>Quantity</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
+              </thead>
+              <tbody>
+                {currentOrders.length > 0 ? (
+                  currentOrders.map((order) => (
+                    <tr key={order.id}>
+                      <td>{order.id}</td>
+                      <td>{order.product}</td>
+                      <td>{order.customer}</td>
+                      <td>{order.deliveryStatus}</td>
+                      <td>{order.quantity}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="no-orders">
+                      No orders found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+    </div>
     </>
   );
 };

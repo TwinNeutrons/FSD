@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&display=swap');
 
-body {
+.login-container {
   margin: 0;
   font-family: "Hubot Sans", sans-serif;
   font-optical-sizing: auto;
@@ -17,13 +17,9 @@ body {
   background-image: url(loginbg.jpg);
   background-position: center;
   background-size: cover;
-}
-
-.login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 
 .login-box {
