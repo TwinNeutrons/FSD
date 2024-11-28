@@ -16,7 +16,9 @@ const Inventory = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/products");
+        const currentOrigin = window.location.origin;
+        const url = `${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000`;
+        const response = await axios.get(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/products`);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -37,12 +39,12 @@ const Inventory = () => {
     try {
       const updatedProduct = { ...formData };
       await axios.put(
-        `http://localhost:5000/api/products/${formData.productId}`,
+        `${window.location.origin}api/products/${formData.productId}`,
         updatedProduct
       );
       alert("Stock updated successfully!");
       // Refresh product list after stock update
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await axios.get(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/products`);
       setProducts(response.data);
       setFormData({
         name: "",

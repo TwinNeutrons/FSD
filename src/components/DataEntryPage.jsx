@@ -25,7 +25,8 @@ const DataEntryPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/orders");
+        const currentOrigin = window.location.origin;
+        const response = await axios.get(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/orders`);        
         setCurrentOrders(response.data);
       } catch (error) {
         console.error("Error fetching current orders:", error);
@@ -45,7 +46,8 @@ const DataEntryPage = () => {
     e.preventDefault();
     try {
       const orderData = { ...formData };
-      await axios.post("http://localhost:5000/api/orders", orderData);
+      const currentOrigin = window.location.origin;
+      await axios.post(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/orders`, orderData);
       alert("Order added successfully!");
       setFormData({
         product: "",
@@ -62,7 +64,7 @@ const DataEntryPage = () => {
         quantity: 1,
       });
       // Refresh orders after submission
-      const response = await axios.get("http://localhost:5000/api/orders");
+      const response = await axios.get(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/orders`);
       setCurrentOrders(response.data);
     } catch (error) {
       console.error("Error adding order:", error);

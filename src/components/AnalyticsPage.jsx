@@ -33,7 +33,8 @@ const Analysis = () => {
   const [cityMarkers, setCityMarkers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    const currentOrigin = window.location.origin;
+    fetch(`${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000/api/orders`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

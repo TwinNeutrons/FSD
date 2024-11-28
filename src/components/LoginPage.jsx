@@ -16,7 +16,8 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isRegister ? "/register" : "/login";
-    const url = `http://localhost:5000${endpoint}`;
+    const currentOrigin = window.location.origin;
+    const url = `${new URL(currentOrigin).protocol}//${new URL(currentOrigin).hostname}:5000${endpoint}`;
 
     try {
       const response = await fetch(url, {
